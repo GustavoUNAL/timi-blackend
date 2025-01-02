@@ -13,39 +13,18 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title=APP_NAME, debug=DEBUG_MODE)
 
 # Configurar CORS (ajusta según tus necesidades)
-# origins = [
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-#     # Agrega dominios o puertos adicionales si tu front corre en otro lugar
-# ]
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
 
-# Configuración de CORS
-# Configurar CORS
-origins = [
-    "http://localhost:3000",  # El dominio de tu frontend, si es local
-    "http://timi-time.online",  # Tu dominio principal
-    "https://timi-time.online",  # Si estás usando https
-    "http://www.timi-time.online",  # Si tienes www también
-    "https://www.timi-time.online",  # Si tienes www también con https
-]
-
-# Añadir el middleware de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Lista de orígenes permitidos
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Permite todos los métodos HTTP
-    allow_headers=["*"],  # Permite todos los encabezados
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# Incluir los routers de categorías y tareas
+
+
+
 app.include_router(categories.router)
 app.include_router(tasks.router)
 
