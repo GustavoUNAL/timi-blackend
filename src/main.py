@@ -27,11 +27,21 @@ app = FastAPI(title=APP_NAME, debug=DEBUG_MODE)
 # )
 
 # Configuración de CORS
+# Configurar CORS
+origins = [
+    "http://localhost:3000",  # El dominio de tu frontend, si es local
+    "http://timi-time.online",  # Tu dominio principal
+    "https://timi-time.online",  # Si estás usando https
+    "http://www.timi-time.online",  # Si tienes www también
+    "https://www.timi-time.online",  # Si tienes www también con https
+]
+
+# Añadir el middleware de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://3.128.32.128:3000", "https://timi-time.online"],  # Orígenes permitidos
+    allow_origins=origins,  # Lista de orígenes permitidos
     allow_credentials=True,
-    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
+    allow_methods=["*"],  # Permite todos los métodos HTTP
     allow_headers=["*"],  # Permite todos los encabezados
 )
 
