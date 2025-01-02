@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional, List
 import enum
+from datetime import datetime
 
 class TaskStatus(str, enum.Enum):
     pending = "pending"
@@ -46,6 +47,8 @@ class TaskOut(BaseModel):
     time_spent: int
     status: TaskStatus
     current_start: int
+    created_at: Optional[datetime] = None  # Fecha de creación
+    finished_at: Optional[datetime] = None # Fecha de finalización
 
     # Para mostrar la categoría anidada
     category: Optional[CategoryOut] = None

@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey, DateTime
 from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.sql import func
 import enum
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -28,6 +30,8 @@ class Task(Base):
     time_spent = Column(Integer, default=0)
     status = Column(Enum(TaskStatus), default=TaskStatus.pending)
     current_start = Column(Integer, default=0)
+    created_at = Column(DateTime, server_default=func.now()) # Fecha de creación
+    finished_at = Column(DateTime, nullable=True) # Fecha de finalización
 
     # Relación inversa: una tarea pertenece a una categoría
     category = relationship("Category", back_populates="tasks")

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from sqlalchemy.orm import Session, joinedload
 import time
+from datetime import datetime
 
 from ..database import SessionLocal
 from .. import models, schemas
@@ -79,8 +80,11 @@ def finish_task(task_id: int, db: Session = Depends(get_db)):
 
     db_task.current_start = 0
     db_task.status = models.TaskStatus.finished
+    db_task.finished_at = datetime.now()  # Establecer la fecha de finalización
     db.commit()
-    return {"message": "Task finished"}
+    db.refresh(db_task)
+
+    return {"message": "Task finished", "task": db_task} 
 
 @router.delete("/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
